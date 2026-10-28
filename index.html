@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>Reservas Demo · Vidriera Digital</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f5f2;--card:#fff;--ink:#16161a;--mut:#6b6b73;--line:#e4e2dc;--acc:#c8872e;--accink:#fff;--ok:#1f8a5b;--bad:#c0392b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101012;--card:#1a1a1e;--ink:#f2f0ea;--mut:#9a9aa3;--line:#2c2c32;--acc:#e0a04a;--accink:#16161a;--ok:#4cc38a;--bad:#ef6b5b}}
+:root[data-theme="dark"]{--bg:#101012;--card:#1a1a1e;--ink:#f2f0ea;--mut:#9a9aa3;--line:#2c2c32;--acc:#e0a04a;--accink:#16161a;--ok:#4cc38a;--bad:#ef6b5b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:960px;margin:0 auto;padding:0 18px}
+header{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.logo{font-weight:800;letter-spacing:.04em}.logo span{color:var(--acc)}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:10px 16px;background:var(--ink);color:var(--bg);font-weight:600}
+button.g{background:transparent;color:var(--ink);border:1px solid var(--line)}button.a{background:var(--acc);color:var(--accink)}button:disabled{opacity:.35;cursor:not-allowed}
+.hero{background:linear-gradient(135deg,#1b1b20,#34261a);color:#f2f0ea;border-radius:24px;padding:36px 24px;margin-bottom:20px}
+.hero h1{margin:0 0 8px;font-size:clamp(28px,6vw,44px);line-height:1.1}.hero p{margin:0 0 18px;color:#cfcac0;max-width:46ch}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.chip{font-size:13px;padding:5px 11px;border-radius:99px;background:rgba(255,255,255,.12)}
+h2{font-size:20px;margin:26px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0;font-size:17px}.mut{color:var(--mut);font-size:14px}.price{font-weight:800;font-size:18px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pros{display:flex;gap:10px;flex-wrap:wrap}.av{width:44px;height:44px;border-radius:50%;background:var(--acc);color:var(--accink);display:grid;place-items:center;font-weight:800}
+dialog{border:0;border-radius:22px;padding:0;width:min(520px,94vw);background:var(--card);color:var(--ink);max-height:90vh}
+dialog::backdrop{background:rgba(0,0,0,.55)}.sh{padding:20px}.sh h3{margin:0 0 4px}
+.opts{display:grid;gap:8px;margin:12px 0}.opt{border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;gap:10px;align-items:center;cursor:pointer;background:transparent;color:var(--ink);text-align:left;width:100%}
+.opt.on{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc) inset}
+.days{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px}.day{flex:0 0 auto;min-width:58px;text-align:center;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:14px;padding:8px 6px}
+.day.on{background:var(--acc);color:var(--accink);border-color:var(--acc)}.day small{display:block;font-size:11px;opacity:.8}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.slot{padding:9px 0;border-radius:10px;background:transparent;border:1px solid var(--line);color:var(--ink)}
+.slot.on{background:var(--acc);color:var(--accink);border-color:var(--acc)}
+input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;margin:6px 0}
+.steps{display:flex;gap:6px;margin:8px 0 4px}.steps i{flex:1;height:4px;border-radius:4px;background:var(--line)}.steps i.on{background:var(--acc)}
+.tabs{display:flex;gap:8px;margin:6px 0 16px;flex-wrap:wrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}.stat b{font-size:24px;display:block}
+.bk{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.tag{font-size:12px;padding:3px 9px;border-radius:99px;border:1px solid var(--line)}.tag.confirmada{color:var(--ok)}.tag.cancelada{color:var(--bad)}.tag.completada{color:var(--mut)}
+.ok{text-align:center;padding:10px 0}.ok .big{font-size:44px}
+footer{padding:30px 0 20px;text-align:center;color:var(--mut);font-size:13px}
+.tbl{overflow-x:auto}
+html:root,html:root:not([data-theme="light"]),html:root[data-theme="dark"]{--bg:#fff;--card:#fff;--ink:#16161a;--mut:#6b6b73;--line:#e4e2dc;--acc:#008C45;--accink:#fff;--ok:#008C45;--bad:#CD212A;color-scheme:light}
+.hero{position:relative;overflow:hidden;background:#fff;color:var(--ink);border:1px solid var(--line);padding-top:46px}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,#008C45 33.3%,#fff 33.3% 66.6%,#CD212A 66.6%)}
+.hero p{color:var(--mut)}.chip{background:#f1f1ee;color:var(--ink)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}label{font-size:13px;font-weight:600;display:block;margin-top:6px}
+textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;margin:6px 0;resize:vertical}
+.pf{display:flex;align-items:center;gap:8px}.pf span{white-space:nowrap;padding:12px;border:1px solid var(--line);border-radius:12px;background:#f6f5f2}.pf input{margin:6px 0}
+.err{color:var(--bad);font-size:13px;min-height:18px}
+@media(max-width:420px){.f2{grid-template-columns:1fr}}
+</style></head><body>
+<div class="w"><header><div class="logo" style="display:flex;align-items:center;gap:10px"><svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><defs><clipPath id="lc"><circle cx="18" cy="18" r="16"/></clipPath></defs><g clip-path="url(#lc)"><rect width="12" height="36" fill="#008C45"/><rect x="12" width="12" height="36" fill="#fff"/><rect x="24" width="12" height="36" fill="#CD212A"/></g><circle cx="18" cy="18" r="16" fill="none" stroke="#16161a" stroke-width="1.5"/><text x="18" y="22" text-anchor="middle" font-size="11" font-weight="800" fill="#16161a" stroke="#fff" stroke-width=".6" paint-order="stroke" font-family="system-ui,sans-serif">BR</text></svg><span style="color:var(--ink)">BARBERÍA <span style="color:#CD212A">ROMA</span></span></div><button class="g" id="bAdm">Panel admin</button></header>
+<main id="app"></main>
+<footer>Demo de sistema de reservas · Vidriera Digital</footer></div>
+<dialog id="dlg"></dialog>
+<script>
+const BR={name:"Barbería Roma",addr:"Av. Ejemplo 1234, Buenos Aires",wa:"5491100000000",pin:"1234"};
+const K="vd_reservas_v1";
+const def=()=>({svc:[
+{id:"s1",n:"Corte de cabello",m:30,p:18000,d:"Clásico o fade, lavado express y perfilado de cejas."},
+{id:"s2",n:"Barba y perfilado",m:30,p:15000,d:"Arreglo con navaja, toalla caliente y bálsamo."},
+{id:"s3",n:"Corte y barba",m:60,p:28000,d:"Nuestro combo más pedido."},
+{id:"s4",n:"Limpieza facial",m:30,p:12000,d:"Vapor, exfoliación y mascarilla hidratante."}],
+pros:[{id:"p1",n:"Nico"},{id:"p2",n:"Leo"},{id:"p3",n:"Mati"}],bk:[]});
+let S;try{S=JSON.parse(localStorage.getItem(K))||def()}catch(e){S=def()}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=n=>"$"+Number(n).toLocaleString("es-AR");
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const hm=m=>String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0");
+const DN=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+const days=()=>{const a=[];for(let i=0;i<14;i++){const d=new Date();d.setDate(d.getDate()+i);if(d.getDay()!==0)a.push(d)}return a};
+const busy=(pro,date,s,d)=>S.bk.some(b=>b.st!=="cancelada"&&b.pro===pro&&b.date===date&&s<b.s+b.d&&b.s<s+d);
+let B={};
+function slots(){const sv=S.svc.find(x=>x.id===B.svc),out=[],now=new Date(),today=iso(now)===B.date,nm=now.getHours()*60+now.getMinutes();
+for(let t=600;t+sv.m<=1140;t+=30){if(today&&t<=nm)continue;const ps=B.pro==="any"?S.pros:S.pros.filter(p=>p.id===B.pro);
+if(ps.some(p=>!busy(p.id,B.date,t,sv.m)))out.push(t)}return out}
+function home(){$("#app").innerHTML=`<section class="hero"><div class="chips"><span class="chip">★ 5.0 · 17 reseñas</span><span class="chip">${esc(BR.addr)}</span></div>
+<h1>${esc(BR.name)}</h1><p>Reservá tu turno online en menos de un minuto. Elegí servicio, profesional y horario.</p><button class="a" onclick="openB()">Reservar turno</button></section>
+<h2>Profesionales</h2><div class="pros">${S.pros.map(p=>`<div style="text-align:center"><div class="av">${esc(p.n[0])}</div><div class="mut">${esc(p.n)}</div></div>`).join("")}</div>
+<h2>Servicios</h2><div class="grid">${S.svc.map(s=>`<div class="card"><h3>${esc(s.n)}</h3><div class="mut">${s.m} min</div><div class="price">${money(s.p)}</div><div class="mut">${esc(s.d)}</div><div class="row" style="margin-top:auto;padding-top:8px"><span></span><button onclick="openB('${s.id}')">Agendar</button></div></div>`).join("")}</div>`}
+function openB(id){B={step:id?1:0,svc:id||null,pro:null,date:null,time:null};dlg.showModal();rb()}
+function rb(){const st=B.step,sv=S.svc.find(x=>x.id===B.svc);let h=`<div class="sh"><div class="row"><h3>Reservar turno</h3><button class="g" onclick="dlg.close()">✕</button></div><div class="steps">${[0,1,2,3].map(i=>`<i class="${i<=st?"on":""}"></i>`).join("")}</div>`;
+if(st===0)h+=`<p class="mut">Elegí el servicio</p><div class="opts">${S.svc.map(s=>`<button class="opt ${B.svc===s.id?"on":""}" onclick="B.svc='${s.id}';B.step=1;rb()"><div style="flex:1"><b>${esc(s.n)}</b><div class="mut">${s.m} min</div></div><b>${money(s.p)}</b></button>`).join("")}</div>`;
+if(st===1)h+=`<p class="mut">${esc(sv.n)} · ¿Con quién?</p><div class="opts"><button class="opt" onclick="B.pro='any';B.step=2;B.date=iso(days()[0]);rb()">Cualquier profesional disponible</button>${S.pros.map(p=>`<button class="opt" onclick="B.pro='${p.id}';B.step=2;B.date=iso(days()[0]);rb()"><span class="av">${esc(p.n[0])}</span>${esc(p.n)}</button>`).join("")}</div><button class="g" onclick="B.step=0;rb()">Atrás</button>`;
+if(st===2){const sl=slots();h+=`<p class="mut">Elegí día y horario</p><div class="days">${days().map(d=>`<button class="day ${iso(d)===B.date?"on":""}" onclick="B.date='${iso(d)}';B.time=null;rb()"><small>${DN[d.getDay()]}</small><b>${d.getDate()}</b></button>`).join("")}</div>
+${sl.length?`<div class="slots">${sl.map(t=>`<button class="slot ${B.time===t?"on":""}" onclick="B.time=${t};rb()">${hm(t)}</button>`).join("")}</div>`:`<p class="mut">No hay horarios libres este día.</p>`}
+<div class="row" style="margin-top:16px"><button class="g" onclick="B.step=1;rb()">Atrás</button><button class="a" ${B.time==null?"disabled":""} onclick="B.step=3;rb()">Continuar</button></div>`}
+if(st===3)h+=`<p class="mut">Tus datos</p><div class="f2"><div><label for="nm">Nombre *</label><input id="nm" autocomplete="given-name"></div><div><label for="ap">Apellido *</label><input id="ap" autocomplete="family-name"></div></div><label for="em">Email *</label><input id="em" type="email" placeholder="juan@mail.com" autocomplete="email"><label for="ph">Teléfono (WhatsApp) *</label><div class="pf"><span>🇦🇷 +54 9</span><input id="ph" inputmode="tel" placeholder="11 5555 5555" autocomplete="tel-national" oninput="phE()" onblur="phE()"></div><div id="phe" class="err"></div><div class="mut" style="font-size:13px">Ejemplo correcto: <b>+54 9 11 5555 5555</b>. Ingresá 10 dígitos: código de área sin 0 + número sin 15 (ej. 1155555555).</div><label for="ob">Observaciones</label><textarea id="ob" rows="2" placeholder="Escribí aquí información relevante para tu turno"></textarea>
+<div class="card" style="margin:10px 0"><b>${esc(sv.n)}</b><span class="mut">${B.date} · ${hm(B.time)} hs · ${money(sv.p)}</span></div>
+<div class="row"><button class="g" onclick="B.step=2;rb()">Atrás</button><button class="a" onclick="confirmB()">Confirmar turno</button></div><p id="er" class="mut" style="color:var(--bad)"></p>`;
+if(st===4){const b=B.done;h+=`<div class="ok"><div class="big">✅</div><h3>¡Turno confirmado!</h3><p class="mut">${esc(b.nm)}, te esperamos el ${b.date} a las ${hm(b.s)} hs con ${esc(S.pros.find(p=>p.id===b.pro).n)}.</p>
+<a href="https://wa.me/${BR.wa}?text=${encodeURIComponent("Hola, soy "+b.nm+". Reservé "+sv.n+" el "+b.date+" a las "+hm(b.s))}" target="_blank" rel="noopener"><button class="a">Avisar por WhatsApp</button></a> <button class="g" onclick="dlg.close()">Cerrar</button></div>`}
+dlg.innerHTML=h+"</div>"}
+function phD(v){let d=v.replace(/\D/g,"");if(d.startsWith("549")&&d.length>10)d=d.slice(3);else if(d.startsWith("54")&&d.length>10)d=d.slice(2);if(d.startsWith("0"))d=d.slice(1);return d}
+function phE(){const el=$("#ph"),d=phD(el.value);let e="";if(d.length&&d.length<10)e="* El teléfono ingresado es demasiado corto";else if(d.length>10)e="* El teléfono ingresado es demasiado largo";$("#phe").textContent=e;el.style.borderColor=e?"var(--bad)":"";return d.length===10?d:null}
+function confirmB(){const g=i=>$(i).value.trim(),nm=g("#nm")+" "+g("#ap"),em=g("#em"),ob=g("#ob"),d=phE(),ph=d?"+54 9 "+d:"";
+if(g("#nm").length<2||g("#ap").length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||!d){$("#er").textContent="Completá nombre, apellido, un email válido y un teléfono de 10 dígitos.";if(!d&&!$("#phe").textContent)$("#phe").textContent="* El teléfono es obligatorio";return}
+const sv=S.svc.find(x=>x.id===B.svc),ps=B.pro==="any"?S.pros:S.pros.filter(p=>p.id===B.pro),p=ps.find(p=>!busy(p.id,B.date,B.time,sv.m));
+if(!p){B.step=2;rb();return}
+const b={id:Date.now(),svc:sv.id,pro:p.id,date:B.date,s:B.time,d:sv.m,nm,ph,em,ob,pr:sv.p,st:"confirmada"};S.bk.push(b);save();B.done=b;B.step=4;rb()}
+let adm=false,tab="turnos",fd=iso(new Date());
+function admin(){const app=$("#app");
+if(!adm){app.innerHTML=`<div class="card" style="max-width:340px;margin:40px auto"><h3>Panel de administración</h3><p class="mut">PIN de la demo: 1234</p><input id="pin" type="password" placeholder="PIN" inputmode="numeric"><button class="a" onclick="if($('#pin').value===BR.pin){adm=true;admin()}else $('#pin').value=''">Entrar</button><button class="g" onclick="exitA()">Volver al sitio</button></div>`;return}
+const list=S.bk.filter(b=>b.date===fd).sort((a,b)=>a.s-b.s),act=S.bk.filter(b=>b.st!=="cancelada");
+app.innerHTML=`<div class="tabs"><button class="${tab==="turnos"?"a":"g"}" onclick="tab='turnos';admin()">Turnos</button><button class="${tab==="serv"?"a":"g"}" onclick="tab='serv';admin()">Servicios</button><button class="g" onclick="exitA()">Salir</button></div>
+<div class="stats"><div class="stat"><b>${S.bk.filter(b=>b.date===iso(new Date())&&b.st!=="cancelada").length}</b><span class="mut">Turnos hoy</span></div><div class="stat"><b>${act.length}</b><span class="mut">Turnos totales</span></div><div class="stat"><b>${money(act.reduce((a,b)=>a+b.pr,0))}</b><span class="mut">Facturación</span></div></div>`+
+(tab==="turnos"?`<h3 style="margin:0 0 8px">Próximos turnos</h3>${up()}<div class="row" style="margin:18px 0 10px"><b>Agenda del día</b><input type="date" value="${fd}" style="width:auto;margin:0" onchange="fd=this.value;admin()"></div>
+${list.length?list.map(b=>`<div class="card bk" style="margin-bottom:8px"><div><b>${hm(b.s)} · ${esc(b.nm)}</b><div class="mut">${esc(S.svc.find(s=>s.id===b.svc)?.n||"")} · ${esc(S.pros.find(p=>p.id===b.pro)?.n||"")} · ${esc(b.ph)}</div></div><div><span class="tag ${b.st}">${b.st}</span> ${b.st==="confirmada"?`<button class="g" onclick="setSt(${b.id},'completada')">Completar</button> <button class="g" onclick="setSt(${b.id},'cancelada')">Cancelar</button>`:""}</div></div>`).join(""):`<p class="mut">Sin turnos para este día.</p>`}`
+:`<div class="grid">${S.svc.map(s=>`<div class="card"><b>${esc(s.n)}</b><span class="mut">Precio (ARS)</span><input type="number" value="${s.p}" onchange="S.svc.find(x=>x.id==='${s.id}').p=+this.value;save()"></div>`).join("")}</div><p><button class="g" onclick="if(confirm('¿Reiniciar todos los datos de la demo?')){S=def();save();admin()}">Reiniciar demo</button></p>`)}
+function up(){const t=iso(new Date()),l=S.bk.filter(b=>b.st==="confirmada"&&b.date>=t).sort((a,b)=>a.date.localeCompare(b.date)||a.s-b.s);return l.length?l.map(b=>`<div class="card bk" style="margin-bottom:8px"><div><b>${b.date.split("-").reverse().join("/")} · ${hm(b.s)} hs · ${esc(b.nm)}</b><div class="mut">${esc(S.svc.find(s=>s.id===b.svc)?.n||"")} · ${esc(S.pros.find(p=>p.id===b.pro)?.n||"")} · ${esc(b.ph)}${b.em?" · "+esc(b.em):""}</div>${b.ob?`<div class="mut">Obs: ${esc(b.ob)}</div>`:""}</div><div><button class="g" onclick="setSt(${b.id},'completada')">Completar</button> <button class="g" onclick="setSt(${b.id},'cancelada')">Cancelar</button></div></div>`).join(""):`<p class="mut">No hay turnos pendientes.</p>`}
+function setSt(id,s){S.bk.find(b=>b.id===id).st=s;save();admin()}
+function exitA(){adm=false;home()}
+$("#bAdm").onclick=admin;home();
+</script></body></html>
